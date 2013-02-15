@@ -1,0 +1,30 @@
+{
+  "name": "brinydeep",
+  "version": "0.0.1",
+  "description": "node.js wrapper for Digital Ocean's API",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hortinstein/brinydeep.git"
+  },
+  "keywords": [
+    "digitalocean",
+    "digital",
+    "ocean",
+    "api",
+    "cloud",
+    "ssd",
+    ""
+  ],
+  "dependencies": {
+    "optimist": "*",
+    "request": "*",
+    "mocha": "*",
+  },
+  "author": "hortinstein",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}
