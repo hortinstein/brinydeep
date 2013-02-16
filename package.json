@@ -4,7 +4,7 @@
   "description": "node.js wrapper for Digital Ocean's API",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/test.js"
+    "test": "mocha -t 40000 test/test.js"
   },
   "repository": {
     "type": "git",
@@ -16,13 +16,13 @@
     "ocean",
     "api",
     "cloud",
-    "ssd",
-    ""
+    "ssd"
   ],
   "dependencies": {
     "optimist": "*",
     "request": "*",
     "mocha": "*",
+    "async": "~0.2.5"
   },
   "author": "hortinstein",
   "license": "BSD",
