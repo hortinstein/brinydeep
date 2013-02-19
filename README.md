@@ -82,7 +82,7 @@ returns an array of all the ids
 
 returns active ids in Digital Oceans API form, (all functions taking IDs can be passed an array of IDs, and will return an array of seperate JSON responses).  
 
-'''
+''' js
 {"status":"OK","droplets":[{"backups_active":null,"id":100823,"image_id":420,"name":"test222","region_id":1,"size_id":33,"status":"active"}]}
 '''
 
@@ -90,7 +90,7 @@ returns active ids in Digital Oceans API form, (all functions taking IDs can be 
 
 returns active ids in Digital Oceans API form
 
-'''
+''' js
 {"status":"OK","droplets":[{"backups_active":null,"id":100823,"image_id":420,"name":"test222","region_id":1,"size_id":33,"status":"active"}]}
 '''
 
@@ -105,7 +105,7 @@ Options:
 *region_id Required, Numeric, this is the id of the region you would like your server in IE: US/Amsterdam
 *ssh_key_ids Optional, Numeric CSV, comma separated list of ssh_key_ids that you would like to be added to the server
 
-'''
+''' js
 {"status":"OK","droplet":{"id":100824,"name":"test","image_id":419,"size_id":32,"event_id":7499}}
 '''
 
@@ -113,7 +113,7 @@ Options:
 
 reboots droplets
 
-'''
+''' js
 {"status":"OK","event_id":7501}
 '''
 
@@ -121,7 +121,7 @@ reboots droplets
 
 power cycles droplets
 
-'''
+''' js
 {"status":"OK","event_id":7501}
 '''
 
@@ -129,7 +129,7 @@ power cycles droplets
 
 shuts off droplets
 
-'''
+''' js
 {"status":"OK","event_id":7501}
 '''
 
@@ -137,7 +137,7 @@ shuts off droplets
 
 powers off droplets
 
-'''
+''' js
 {"status":"OK","event_id":7501}
 '''
 
@@ -145,7 +145,7 @@ powers off droplets
 
 powers on droplets
 
-'''
+''' js
 {"status":"OK","event_id":7501}
 '''
 
@@ -153,7 +153,7 @@ powers on droplets
 
 This method will reset the root password for a droplet. Please be aware that this will reboot the droplet to allow resetting the password.
 
-'''
+''' js
 {"status":"OK","event_id":7501}
 '''
 
@@ -161,7 +161,7 @@ This method will reset the root password for a droplet. Please be aware that thi
 
 This method will resize a droplet based on id size
 
-'''
+''' js
 {"status":"OK","event_id":7501}
 '''
 
@@ -169,7 +169,7 @@ This method will resize a droplet based on id size
 
 This method will take a snapshot of a droplet (this will only take one id as an arg)
 
-'''
+''' js
 {"status":"OK","event_id":7504}
 '''
 
@@ -177,7 +177,7 @@ This method will take a snapshot of a droplet (this will only take one id as an 
 
 This method allows you to restore a droplet with a previous image or snapshot. This will be a mirror copy of the image or snapshot to your droplet. Be sure you have backed up any necessary information prior to restore.
 
-'''
+''' js
 {"status":"OK","event_id":7504}
 '''
 
@@ -185,7 +185,7 @@ This method allows you to restore a droplet with a previous image or snapshot. T
 
 This method allows you to reinstall a droplet with a default image. This is useful if you want to start again but retain the same IP address for your droplet.
 
-'''
+''' js
 {"status":"OK","event_id":7504}
 '''
 
@@ -193,7 +193,7 @@ This method allows you to reinstall a droplet with a default image. This is usef
 
 This method enables automatic backups which run in the background daily to backup your droplet's data.
 
-'''
+''' js
 {"status":"OK","event_id":7504}
 '''
 
@@ -201,7 +201,7 @@ This method enables automatic backups which run in the background daily to backu
 
 This method disables automatic backups.
 
-'''
+''' js
 {"status":"OK","event_id":7504}
 '''
 
@@ -209,7 +209,7 @@ This method disables automatic backups.
 
 This method destroys all droplets.
 
-'''
+''' js
 {"status":"OK","event_id":7504}
 '''
 
@@ -217,7 +217,7 @@ This method destroys all droplets.
 
 This method destroys droplets provided their ids.
 
-'''
+''' js
 {"status":"OK","event_id":7504}
 '''
 
@@ -225,7 +225,7 @@ This method destroys droplets provided their ids.
 
 Returns all regions.
 
-'''
+''' js
 {"status":"OK","regions":[{"id":1,"name":"New York 1"},{"id":2,"name":"Amsterdam 1"}]}
 '''
 
@@ -234,7 +234,7 @@ Returns all regions.
 
 Returns all images.
 
-'''
+''' js
 {"status":"OK","images":[{"id":429,"name":"Real Backup 10242011","distribution":"Ubuntu"},{"id":430,"name":"test233","distribution":"Ubuntu"},{"id":431,"name":"test888","distribution":"Ubuntu"},{"id":442,"name":"tesah22","distribution":"Ubuntu"},{"id":443,"name":"testah33","distribution":"Ubuntu"},{"id":444,"name":"testah44","distribution":"Ubuntu"},{"id":447,"name":"ahtest55","distribution":"Ubuntu"},{"id":448,"name":"ahtest66","distribution":"Ubuntu"},{"id":449,"name":"ahtest77","distribution":"Ubuntu"},{"id":458,"name":"Rails3-1Ruby1-9-2","distribution":"Ubuntu"},{"id":466,"name":"NYTD Backup 1-18-2012","distribution":"Ubuntu"},{"id":478,"name":"NLP Final","distribution":"Ubuntu"},{"id":540,"name":"API - Final","distribution":"Ubuntu"},{"id":577,"name":"test1-1","distribution":"Ubuntu"},{"id":578,"name":"alec snapshot1","distribution":"Ubuntu"}]}
 '''
 
@@ -242,7 +242,7 @@ Returns all images.
 
 Shows images for given ids.
 
-'''
+''' js
 {"status":"OK","image":{"id":429,"name":"Real Backup 10242011","distribution":"Ubuntu"}}
 '''
 
@@ -250,7 +250,7 @@ Shows images for given ids.
 
 destroys images for given ids.
 
-'''
+''' js
 {"status":"OK","image":{"id":429,"name":"Real Backup 10242011","distribution":"Ubuntu"}}
 '''
 
@@ -258,7 +258,7 @@ destroys images for given ids.
 
 shows all ssh keys
 
-'''
+''' js
 {"status":"OK","ssh_keys":[{"id":10,"name":"office-imac"},{"id":11,"name":"macbook-air"}]}
 '''
 
@@ -266,7 +266,7 @@ shows all ssh keys
 
 shows all ssh keys
 
-'''
+''' js
 {"status":"OK","ssh_keys":[{"id":10,"name":"office-imac"},{"id":11,"name":"macbook-air"}]}
 '''
 
@@ -274,7 +274,7 @@ shows all ssh keys
 
 shows all different sizes 
 
-'''
+''' js
 {"status":"OK","sizes":[{"id":33,"name":"512MB"},{"id":34,"name":"1GB"},{"id":35,"name":"2GB"},{"id":36,"name":"4GB"},{"id":37,"name":"8GB"},{"id":38,"name":"16GB"}]}
 '''
 
