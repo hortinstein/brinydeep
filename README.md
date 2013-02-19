@@ -82,17 +82,17 @@ returns an array of all the ids
 
 returns active ids in Digital Oceans API form, (all functions taking IDs can be passed an array of IDs, and will return an array of seperate JSON responses).  
 
-''' js
+``` js
 {"status":"OK","droplets":[{"backups_active":null,"id":100823,"image_id":420,"name":"test222","region_id":1,"size_id":33,"status":"active"}]}
-'''
+```
 
 ## var brinydeep.show_droplets(id,callback) or brinydeep.show_droplets([id,...],callback)
 
 returns active ids in Digital Oceans API form
 
-''' js
+```
 {"status":"OK","droplets":[{"backups_active":null,"id":100823,"image_id":420,"name":"test222","region_id":1,"size_id":33,"status":"active"}]}
-'''
+```
 
 ## var brinydeep.new_droplets = function (options,callback)
 
@@ -105,178 +105,178 @@ Options:
 *region_id Required, Numeric, this is the id of the region you would like your server in IE: US/Amsterdam
 *ssh_key_ids Optional, Numeric CSV, comma separated list of ssh_key_ids that you would like to be added to the server
 
-''' js
+```
 {"status":"OK","droplet":{"id":100824,"name":"test","image_id":419,"size_id":32,"event_id":7499}}
-'''
+```
 
 ## var brinydeep.reboot(ids,callback)
 
 reboots droplets
 
-''' js
+```
 {"status":"OK","event_id":7501}
-'''
+```
 
 ## var brinydeep.power_cycle(ids,callback)
 
 power cycles droplets
 
-''' js
+```
 {"status":"OK","event_id":7501}
-'''
+```
 
 ## var brinydeep.shut_down(ids,callback)
 
 shuts off droplets
 
-''' js
+```
 {"status":"OK","event_id":7501}
-'''
+```
 
 ## var brinydeep.power_off(ids,callback)
 
 powers off droplets
 
-''' js
+```
 {"status":"OK","event_id":7501}
-'''
+```
 
 ## var brinydeep.power_on(ids,callback)
 
 powers on droplets
 
-''' js
+```
 {"status":"OK","event_id":7501}
-'''
+```
 
 ## var brinydeep.reset_root_password(ids,callback)
 
 This method will reset the root password for a droplet. Please be aware that this will reboot the droplet to allow resetting the password.
 
-''' js
+```
 {"status":"OK","event_id":7501}
-'''
+```
 
 ## var brinydeep.resize(ids,size_id,callback)
 
 This method will resize a droplet based on id size
 
-''' js
+```
 {"status":"OK","event_id":7501}
-'''
+```
 
 ## var brinydeep.snapshot(id,name,callback)
 
 This method will take a snapshot of a droplet (this will only take one id as an arg)
 
-''' js
+```
 {"status":"OK","event_id":7504}
-'''
+```
 
 ## var brinydeep.restore(ids,name,callback)
 
 This method allows you to restore a droplet with a previous image or snapshot. This will be a mirror copy of the image or snapshot to your droplet. Be sure you have backed up any necessary information prior to restore.
 
-''' js
+```
 {"status":"OK","event_id":7504}
-'''
+```
 
 ## var brinydeep.rebuild(ids,image_id,callback)
 
 This method allows you to reinstall a droplet with a default image. This is useful if you want to start again but retain the same IP address for your droplet.
 
-''' js
+```
 {"status":"OK","event_id":7504}
-'''
+```
 
 ## var brinydeep.enable_backups(ids,callback)
 
 This method enables automatic backups which run in the background daily to backup your droplet's data.
 
-''' js
+```
 {"status":"OK","event_id":7504}
-'''
+```
 
 ## var brinydeep.disable_backups(ids,callback)
 
 This method disables automatic backups.
 
-''' js
+```
 {"status":"OK","event_id":7504}
-'''
+```
 
 ## var brinydeep.destroy_all_droplets(callback)
 
 This method destroys all droplets.
 
-''' js
+```
 {"status":"OK","event_id":7504}
-'''
+```
 
 ## var brinydeep.destroy_all_droplets(ids,callback)
 
 This method destroys droplets provided their ids.
 
-''' js
+```
 {"status":"OK","event_id":7504}
-'''
+```
 
 ## var brinydeep.regions(callback)
 
 Returns all regions.
 
-''' js
+```
 {"status":"OK","regions":[{"id":1,"name":"New York 1"},{"id":2,"name":"Amsterdam 1"}]}
-'''
+```
 
 
 ## var brinydeep.all_images(callback)
 
 Returns all images.
 
-''' js
+```
 {"status":"OK","images":[{"id":429,"name":"Real Backup 10242011","distribution":"Ubuntu"},{"id":430,"name":"test233","distribution":"Ubuntu"},{"id":431,"name":"test888","distribution":"Ubuntu"},{"id":442,"name":"tesah22","distribution":"Ubuntu"},{"id":443,"name":"testah33","distribution":"Ubuntu"},{"id":444,"name":"testah44","distribution":"Ubuntu"},{"id":447,"name":"ahtest55","distribution":"Ubuntu"},{"id":448,"name":"ahtest66","distribution":"Ubuntu"},{"id":449,"name":"ahtest77","distribution":"Ubuntu"},{"id":458,"name":"Rails3-1Ruby1-9-2","distribution":"Ubuntu"},{"id":466,"name":"NYTD Backup 1-18-2012","distribution":"Ubuntu"},{"id":478,"name":"NLP Final","distribution":"Ubuntu"},{"id":540,"name":"API - Final","distribution":"Ubuntu"},{"id":577,"name":"test1-1","distribution":"Ubuntu"},{"id":578,"name":"alec snapshot1","distribution":"Ubuntu"}]}
-'''
+```
 
 ## var brinydeep.show_images(image_ids,callback)
 
 Shows images for given ids.
 
-''' js
+```
 {"status":"OK","image":{"id":429,"name":"Real Backup 10242011","distribution":"Ubuntu"}}
-'''
+```
 
 ## var brinydeep.destroy_images(image_ids,callback)
 
 destroys images for given ids.
 
-''' js
+```
 {"status":"OK","image":{"id":429,"name":"Real Backup 10242011","distribution":"Ubuntu"}}
-'''
+```
 
 ## var brinydeep.all_ssh_keys(callback)
 
 shows all ssh keys
 
-''' js
+```
 {"status":"OK","ssh_keys":[{"id":10,"name":"office-imac"},{"id":11,"name":"macbook-air"}]}
-'''
+```
 
 ## var brinydeep.show_ssh_keys(ids,callback)
 
 shows all ssh keys
 
-''' js
+```
 {"status":"OK","ssh_keys":[{"id":10,"name":"office-imac"},{"id":11,"name":"macbook-air"}]}
-'''
+```
 
 ## var brinydeep.sizes(ids,callback)
 
 shows all different sizes 
 
-''' js
+```
 {"status":"OK","sizes":[{"id":33,"name":"512MB"},{"id":34,"name":"1GB"},{"id":35,"name":"2GB"},{"id":36,"name":"4GB"},{"id":37,"name":"8GB"},{"id":38,"name":"16GB"}]}
-'''
+```
 
 # license
 
