@@ -60,7 +60,9 @@ brinydeep.get_ids(function (e,o) {
 });
 
 ```
-
+#TODO
+*SSH commands to hosts
+*Clean up test suite
 
 # API methods
 
