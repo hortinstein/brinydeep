@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Brinydeep by hortinstein</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Brinydeep</h1>
+        <p>node.js wrapper for Digital Ocean's API</p>
+
+        <p class="view"><a href="https://github.com/hortinstein/brinydeep">View the Project on GitHub <small>hortinstein/brinydeep</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/hortinstein/brinydeep/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/hortinstein/brinydeep/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/hortinstein/brinydeep">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><img src="https://www.digitalocean.com/assets/digital-ocean-logo.png" alt="Digital Ocean Logo"></p>
+
+<h1>brinydeep</h1>
+
+<h1></h1>
+
+<p>node.js wrapper for <a href="https://api.digitalocean.com">Digital Ocean's API</a></p>
+
+<h1>install</h1>
+
+<p>With <a href="https://npmjs.org">npm</a> do:</p>
+
+<pre><code>npm install brinydeep
+</code></pre>
+
+<h1>example</h1>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">brinydeep</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'brinydeep'</span><span class="p">);</span>
+<span class="nx">brinydeep</span><span class="p">.</span><span class="nx">setup</span><span class="p">(</span><span class="nx">CLIENT_KEY</span><span class="p">,</span> <span class="nx">API_KEY</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">new_droplet</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">"test1"</span><span class="p">,</span>
+    <span class="nx">size_id</span><span class="o">:</span> <span class="mi">66</span><span class="p">,</span>
+    <span class="nx">image_id</span><span class="o">:</span> <span class="mi">25306</span><span class="p">,</span>
+    <span class="nx">region_id</span><span class="o">:</span> <span class="mi">1</span>
+<span class="p">};</span>
+<span class="nx">brinydeep</span><span class="p">.</span><span class="nx">new_droplets</span><span class="p">(</span><span class="nx">new_droplet</span><span class="p">,</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">brinydeep</span><span class="p">.</span><span class="nx">get_ids</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">temp_ids</span> <span class="o">=</span> <span class="nx">o</span><span class="p">;</span>
+<span class="p">});</span>
+
+</pre></div>
+
+<h1>example with multiple machines</h1>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">new_droplet_multi</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">droplets</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nx">name</span><span class="o">:</span> <span class="s2">"test2"</span><span class="p">,</span>
+            <span class="nx">size_id</span><span class="o">:</span> <span class="mi">66</span><span class="p">,</span>
+            <span class="nx">image_id</span><span class="o">:</span> <span class="mi">25306</span><span class="p">,</span>
+            <span class="nx">region_id</span><span class="o">:</span> <span class="mi">1</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nx">name</span><span class="o">:</span> <span class="s2">"test3"</span><span class="p">,</span>
+            <span class="nx">size_id</span><span class="o">:</span> <span class="mi">66</span><span class="p">,</span>
+            <span class="nx">image_id</span><span class="o">:</span> <span class="mi">25306</span><span class="p">,</span>
+            <span class="nx">region_id</span><span class="o">:</span> <span class="mi">1</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+<span class="kd">var</span> <span class="nx">temp_ids</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="nx">brinydeep</span><span class="p">.</span><span class="nx">new_droplets</span><span class="p">(</span><span class="nx">new_droplet_multi</span><span class="p">,</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">brinydeep</span><span class="p">.</span><span class="nx">get_ids</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">temp_ids</span> <span class="o">=</span> <span class="nx">o</span><span class="p">;</span>
+<span class="p">});</span>
+
+</pre></div>
+
+<h1>license</h1>
+
+<p>MIT</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/hortinstein">hortinstein</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-38615368-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
