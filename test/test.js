@@ -46,26 +46,33 @@ var id;
 // });
 
 // it('should be able to create a droplet', function (done) {
-// 	brinydeep.new_droplet(new_droplet,function (e,o) {
+// 	brinydeep.new_droplets(new_droplet,function (e,o) {
 // 		o.status.should.equal('OK');
 // 		done();
 // 	});
 // });
 // it('should be able to create multiple droplets', function (done) {
-// 	brinydeep.new_droplet(new_droplet_multi,function (e,o) {
+// 	brinydeep.new_droplets(new_droplet_multi,function (e,o) {
 // 		console.log(e,o)
 // 		o.status.should.equal('OK');
 // 		o.droplets.length.should.equal(0);
 // 		done();
 // 	});
 // });
-// it('should be able to list all ids', function (done) {
-// 	brinydeep.get_ids(function (e,o) {
-// 		temp_ids = o;
-// 		//o.length.should.equal(3);
-// 		done();
-// 	});
-// });
+it('should be able to list all ids', function (done) {
+	brinydeep.get_ids(function (e,o) {
+		temp_ids = o;
+		//o.length.should.equal(3);
+		done();
+	});
+});
+it('should be able to show droplet by ID', function (done) {
+	brinydeep.show_droplets('105423',function (e,o) {
+		console.log(o);
+		o.status.should.equal('OK');
+		done();
+	});
+});
 // it('should be able reboot machines', function (done) {
 // 	brinydeep.reboot(temp_ids,function (e,o) {
 // 		console.log(o)
@@ -74,14 +81,14 @@ var id;
 // 		})
 // 	});
 // });
-// it('should be able to destroy all machines', function (done) {
-// 	brinydeep.destroy_all_droplets(function (e,o) {
-// 		o.forEach(function (stat) {
-// 			stat.status.should.equal('OK');
-// 		})
-// 		done();
-// 	});
-// });
+it('should be able to destroy all machines', function (done) {
+	brinydeep.destroy_all_droplets(function (e,o) {
+		o.forEach(function (stat) {
+			stat.status.should.equal('OK');
+		})
+		done();
+	});
+});
 // it('should be able to list sizes', function (done) {
 // 	brinydeep.sizes(function (e,o) {
 // 		o.status.should.equal('OK');
