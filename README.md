@@ -272,7 +272,7 @@ shows all ssh keys
 {"status":"OK","ssh_keys":[{"id":10,"name":"office-imac"},{"id":11,"name":"macbook-air"}]}
 ```
 
-## brinydeep.sizes(ids,callback)
+## brinydeep.sizes(callback)
 
 shows all different sizes 
 

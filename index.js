@@ -11,7 +11,7 @@ var host_string = "https://api.digitalocean.com/"
 
 
 var send_request = function (urls,callback) {
-	console.log(urls)
+	//console.log(urls)
   var req = function (url,callback) {
   	request(url,function (e,o) {
 			o = JSON.parse(o.body);	
