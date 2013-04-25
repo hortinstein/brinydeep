@@ -66,13 +66,13 @@ it('should be able to list all ids', function (done) {
 		done();
 	});
 });
-it('should be able to show droplet by ID', function (done) {
-	brinydeep.show_droplets('105423',function (e,o) {
-		console.log(o);
-		o.status.should.equal('OK');
-		done();
-	});
-});
+// it('should be able to show droplet by ID', function (done) {
+// 	brinydeep.show_droplets('105423',function (e,o) {
+// 		console.log(o);
+// 		o.status.should.equal('OK');
+// 		done();
+// 	});
+// });
 // it('should be able reboot machines', function (done) {
 // 	brinydeep.reboot(temp_ids,function (e,o) {
 // 		console.log(o)
@@ -81,17 +81,18 @@ it('should be able to show droplet by ID', function (done) {
 // 		})
 // 	});
 // });
-it('should be able to destroy all machines', function (done) {
-	brinydeep.destroy_all_droplets(function (e,o) {
-		o.forEach(function (stat) {
-			stat.status.should.equal('OK');
-		})
-		done();
-	});
-});
-// it('should be able to list sizes', function (done) {
-// 	brinydeep.sizes(function (e,o) {
-// 		o.status.should.equal('OK');
+// it('should be able to destroy all machines', function (done) {
+// 	brinydeep.destroy_all_droplets(function (e,o) {
+// 		o.forEach(function (stat) {
+// 			stat.status.should.equal('OK');
+// 		})
 // 		done();
 // 	});
 // });
+it('should be able to list sizes', function (done) {
+	brinydeep.sizes(function (e,o) {
+		o.status.should.equal('OK');
+		console.log(o);
+		done();
+	});
+});
