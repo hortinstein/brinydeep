@@ -2,15 +2,15 @@
 =========
 ## 0.51 notes 
 *   added a function that takes in ID's and returns IPs (if not available will continue to poll until IP is assigned):
-''' js
+``` js
 get_ips([185733,185734,185735], callback) 
-'''
+```
 returns: 
-''' js
+``` js
 [ { ip: '192.81.212.217', id: 185733 },
   { ip: '198.211.115.4', id: 185734 },
   { ip: '192.81.218.144', id: 185735 } ]
-'''
+```
 
 ## 0.5 notes 
 *   fixed several bugs due with untested functions
