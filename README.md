@@ -1,6 +1,16 @@
 # brinydeep
 =========
 
+* 0.5 notes 
+*   fixed several bugs due with untested functions
+*   seperated requesting logic for the api exposure functions
+*   added a ip providing event emitter to allow an event to be throw to client when an event is picked up
+
+* TODO
+*   ensure 100% test coverage
+*   implement ssh functionality
+*   clean up credentials string handling so it is only in one file
+
 node.js wrapper for [Digital Ocean's API](https://api.digitalocean.com)
 # install
 

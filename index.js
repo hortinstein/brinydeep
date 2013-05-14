@@ -1,5 +1,4 @@
 var request = require('request');
-var async = require('async');
 
 var brinydeep = {};
 module.exports = brinydeep;
@@ -7,49 +6,15 @@ module.exports = brinydeep;
 var api_key= "";
 var client_id = ""; 
 var cred_string = "";
-var host_string = "https://api.digitalocean.com/"
+var host_string = "https://api.digitalocean.com/";
+var requestor = require('./lib/request.js');
 
-
-var send_request = function (urls,callback) {
-	//console.log(urls)
-  var req = function (url,callback) {
-  	request(url,function (e,o) {
-			o = JSON.parse(o.body);	
-			if (o.status === 'ERROR') {
-				callback(o.description,o);
-			} else {
-				callback(e,o);	
-			}
-		});
-  }
-	if (Array.isArray(urls)){
-		async.map(urls, req, function (e,r) {
-			callback(e,r);
-		});
-	} else {
-		req(urls,callback);
-	}
-	
-}
-
-var build_requests = function (type, api_path,arg) {
-	if (type === undefined){ type = '/'};
-	if (Array.isArray(arg)){
-		var reqs = [];
-		for (var item in arg){
-			reqs.push(host_string+'/'+type+'/'+arg[item]+'/'+api_path+'/?'+cred_string);
-		}
-		return reqs;
-	} 
-	else return host_string+'/'+type+'/'+arg+'/'+api_path+'/?'+cred_string;
-}
-
-brinydeep.setup = function  (sclient_id,sapi_key) {
-	api_key = sapi_key;
-	client_id = sclient_id;
-	cred_string = "client_id=" + client_id + "&api_key=" + api_key;
-}
-
+brinydeep.setup = function (c_client_id, c_api_key) {
+   api_key = c_api_key;
+   client_id = c_client_id;
+   cred_string = "client_id=" + client_id + "&api_key=" + api_key;
+   requestor.setup(host_string,cred_string);
+};
 
 /////////////////
 //Documentation//
@@ -57,7 +22,7 @@ brinydeep.setup = function  (sclient_id,sapi_key) {
 brinydeep.documentation = function  (callback) {
 	var req = host_string+ cred_string;
 	request(req,function (e,o) {
-		o = o.body
+		o = o.body;
 		//console.log(e,o);
 		callback(e,o);
 	});
@@ -68,8 +33,8 @@ brinydeep.documentation = function  (callback) {
 //Droplets//
 ////////////
 brinydeep.get_ids = function (callback) {
-	var req = host_string+ "/droplets/?" + cred_string
-	send_request(req,function (e,o) {
+	var req = host_string+ "/droplets/?" + cred_string;
+	requestor.send_request(req,function (e,o) {
 		if (e) { callback(e) }
 		else {
 			var ids = [];
@@ -77,172 +42,161 @@ brinydeep.get_ids = function (callback) {
 				ids.push(machine.id);
 			});
 			callback(e,ids);
-		};
+		}
 	});
-}
+};
 brinydeep.show_active = function (callback) {
-	var req = host_string+ "/droplets/?" + cred_string
-	send_request(req,callback);
-}
-
-brinydeep.show_droplets = function (droplet_ids, callback) {
-	var reqs = build_requests('droplets','',droplet_ids);
-	send_request(reqs,callback);
+	var req = host_string+ "/droplets/?" + cred_string;
+	requestor.send_request(req,callback);
 };
 
-
-
-// name Required, String, this is the name of the droplet - must be formatted by hostname rules
-// size_id Required, Numeric, this is the id of the size you would like the droplet created at
-// image_id Required, Numeric, this is the id of the image you would like the droplet created with
-// region_id Required, Numeric, this is the id of the region you would like your server in IE: US/Amsterdam
-// ssh_key_ids Optional, Numeric CSV, comma separated list of ssh_key_ids that you would like to be added to the server
-var build_machine_req = function (machine) {
-	var ret = "/new?name="+machine.name+
-													"&size_id="+machine.size_id+
-													"&image_id="+machine.image_id+
-													"&region_id="+machine.region_id+'&'+cred_string;
-
-	if (machine.hasOwnProperty('ssh_key_ids')){
-		ret+=("&ssh_key_ids="+machine.ssh_key_ids);
-	} 
-	return ret;
-}
+brinydeep.show_droplets = function (droplet_ids, callback) {
+	var reqs = requestor.build_requests('droplets','',droplet_ids);
+	requestor.send_request(reqs,callback);
+};
 
 brinydeep.new_droplets = function (options,callback) {
 	var new_machine_req = "";
 	if (options.hasOwnProperty('droplets')){
-		var new_machine_req = [];
+		new_machine_req = [];
 		options.droplets.forEach(function (machine){
 			//console.log(machine)
-			new_machine_req.push( build_machine_req(machine));
+			new_machine_req.push( requestor.build_machine_req(machine));
 		});
 	} else {
-		new_machine_req = build_machine_req(options);
+		new_machine_req = requestor.build_machine_req(options);
 	}
-	options = build_requests('droplets','/',new_machine_req);
-	send_request(options,callback);
-
-
+	options = requestor.build_requests('droplets','/',new_machine_req);
+	requestor.send_request(options,callback);
 };
+
 // droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.reboot = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','reboot',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','reboot',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.power_cycle = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','power_cycle',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','power_cycle',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.shut_down = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','shut_down',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','shut_down',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.power_off = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','power_off',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','power_off',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.power_on = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','power_on',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','power_on',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.reset_root_password = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','password_reset',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','password_reset',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.resize = function (droplet_ids,size_id,callback) {
-	api_req = 'resize/?size_id='+size_id+'&'+cred_string;
-	var reqs = build_requests('droplets',api_req,droplet_ids);
-	send_request(reqs,callback);
+	var api_req = 'resize/?size_id='+size_id+'&'+cred_string;
+	var reqs = requestor.build_requests('droplets',api_req,droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.snapshot = function (droplet_id,name,callback) {
-	api_req = droplet_id+'/snapshot/?name='+name+'&'+cred_string;
+	var api_req = droplet_id+'/snapshot/?name='+name+'&'+cred_string;
 	
-	send_request(reqs,callback);
+	requestor.send_request(api_req,callback);
 };
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.restore = function (droplet_ids,name,callback) {
-	api_req = 'restore/?name='+name+'&'+cred_string;
-	var reqs = build_requests('droplets',api_req,droplet_ids);
-	send_request(reqs,callback);
+	var api_req = 'restore/?name='+name+'&'+cred_string;
+	var reqs = requestor.build_requests('droplets',api_req,droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.rebuild = function (droplet_ids,callback) {
-	api_req = 'rebuild/?image_id='+name+'&'+cred_string;
-	var reqs = build_requests('droplets',api_req,droplet_ids);
-	send_request(reqs,callback);
+	var api_req = 'rebuild/?image_id='+name+'&'+cred_string;
+	var reqs = requestor.build_requests('droplets',api_req,droplet_ids);
+	requestor.send_request(reqs,callback);
 };
 
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.enable_backups = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','enable_backups',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','enable_backups',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.disable_backups = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','disable_backups',droplet_ids);
-	send_request(reqs,callback);
+	var reqs = requestor.build_requests('droplets','disable_backups',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
+
 //image_id Required, Numeric, this is the id of the image you would like to use to rebuild your droplet with
 brinydeep.destroy_all_droplets = function (callback) {
 	brinydeep.get_ids(function (e,o) {
 		if (!e){
-			var reqs = build_requests('droplets','destroy',o)
-			send_request(reqs,callback)
+			var reqs = requestor.build_requests('droplets','destroy',o);
+			requestor.send_request(reqs,callback);
 		}
-	})
+	});
 };
 
 //droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.destroy = function (droplet_ids,callback) {
-	var reqs = build_requests('droplets','destroy',droplet_ids);
-	send_request(reqs,callback)
+	var reqs = requestor.build_requests('droplets','destroy',droplet_ids);
+	requestor.send_request(reqs,callback);
 };
 
 ///////////
 //Regions//
 ///////////
 brinydeep.regions = function (callback) {
-	var req = host_string+ "/regions/?" + cred_string
-	send_request(req,callback);
+	var req = host_string+ "/regions/?" + cred_string;
+	requestor.send_request(req,callback);
 };
 //////////
 //Images//
 //////////
 brinydeep.all_images = function (callback) {
 	var req = host_string+ "/images/?" + cred_string
-	send_request(req,callback);
+	requestor.send_request(req,callback);
 };
 //image_id Required, Numeric, this is the id of the image you would like to use to rebuild your droplet with
 brinydeep.show_images = function (image_ids, callback) {
-	var reqs = build_requests('images','/',image_ids);
-	send_request(reqs,callback)
+	var reqs = requestor.build_requests('images','/',image_ids);
+	requestor.send_request(reqs,callback);
 };
 //image_id Required, Numeric, this is the id of the image you would like to use to rebuild your droplet with
 brinydeep.destroy_images = function (image_ids, callback) {
-	var reqs = build_requests('images','destroy',image_ids);
-	send_request(reqs,callback)
+	var reqs = requestor.build_requests('images','destroy',image_ids);
+	requestor.send_request(reqs,callback);
 };
-
 
 ////////////
 //SSH Keys//
 ////////////
 brinydeep.all_ssh_keys = function (callback) {
-	var req = host_string+ "/ssh_keys/?" + cred_string
-	send_request(req,callback);
+	var req = host_string+ "/ssh_keys/?" + cred_string;
+	requestor.send_request(req,callback);
 };
 //ssh_key Required, Numeric, this is the id of the ssh key you would like to use to display
 brinydeep.show_ssh_key = function (ssh_key_ids,callback) {
-	var reqs = build_requests('images','/',ssh_key_ids);
-	send_request(reqs,callback)
+	var reqs = requestor.build_requests('images','/',ssh_key_ids);
+	requestor.send_request(reqs,callback);
 };
 ////////Coming soon with API///////////////////////////////////
 // brinydeep.add_ssh_key = function (ssh_key,callback) {	
@@ -255,7 +209,7 @@ brinydeep.show_ssh_key = function (ssh_key_ids,callback) {
 
 brinydeep.sizes = function (callback) {
 	var req = host_string+ "/sizes/?" + cred_string
-	send_request(req,callback);
+	requestor.send_request(req,callback);
 }
 
 if(!module.parent) {
