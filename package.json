@@ -1,6 +1,6 @@
 {
   "name": "brinydeep",
-  "version": "0.0.5",
+  "version": "0.0.51",
   "description": "node.js wrapper for Digital Ocean's API",
   "main": "index.js",
   "scripts": {

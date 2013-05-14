@@ -52,19 +52,17 @@ describe('droplet creation', function() {
 
 	it('should be able to create a single droplet', function(done) {
 		brinydeep.new_droplets(new_droplet, function(e, o) {
-			//console.log(e, o);
 			o.status.should.equal('OK');
 			done();
 		});
 	});
 
-	// it('should be able to create multiple droplets', function(done) {
-	// 	brinydeep.new_droplets(new_droplet_multi, function(e, o) {
-	// 		console.log(e, o);
-	// 		o.length.should.equal(2);
-	// 		done();
-	// 	});
-	// });
+	it('should be able to create multiple droplets', function(done) {
+		brinydeep.new_droplets(new_droplet_multi, function(e, o) {
+			o.length.should.equal(2);
+			done();
+		});
+	});
 
 });
 
@@ -81,9 +79,20 @@ describe('bulk droplet info', function() {
 
 	it('should be able to list all droplet IDs created in current session', function(done) {
 		test_droplet_ids = brinydeep.get_ids_created_this_session();
-		test_droplet_ids.length.should.equal(1);
+		test_droplet_ids.length.should.equal(3);
 		//console.log(test_droplet_ids);
 		done();
+	});
+	it('should be able to provide all droplet IPs', function(done) {
+		this.timeout(50 * 1000); //unclear how long this should take this will disable the timeout
+		brinydeep.get_ips(test_droplet_ids,function (e,o) {
+			o.length.should.equal(3);
+			console.log(o);
+			o[0].ip_address.should.not.equal(null);
+			o[1].ip_address.should.not.equal(null);
+			o[2].ip_address.should.not.equal(null);
+			done();
+		});
 	});
 
 
@@ -115,8 +124,9 @@ describe('droplet functions', function() {
 
 	it('should be able to destroy test droplets', function(done) {
 		brinydeep.destroy(test_droplet_ids, function(e, o) {
-			console.log(e, o, o[0].error_message);
-			o.status.should.equal('OK');
+			o[0].status.should.equal('OK');
+			o[1].status.should.equal('OK');
+			o[2].status.should.equal('OK');
 			done();
 		});
 	});

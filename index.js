@@ -91,6 +91,13 @@ brinydeep.new_droplets = function (options,callback) {
 };
 
 // droplet_id(s) Required, Integer, this is the id of your droplet
+brinydeep.get_ips = function (droplet_ids, callback) {
+	var ip_provider = require('./lib/ip_provider.js');
+	ip_provider(droplet_ids,requestor,callback);
+
+};
+
+// droplet_id(s) Required, Integer, this is the id of your droplet
 brinydeep.reboot = function (droplet_ids,callback) {
 	var reqs = requestor.build_requests('droplets','reboot',droplet_ids);
 	requestor.send_request(reqs,callback);
