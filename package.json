@@ -23,7 +23,7 @@
     "request": "*",
     "mocha": "*",
     "async": "~0.2.5",
-    "should": "~1.2.1"
+    "should": "~1.2.2"
   },
   "author": "hortinstein",
   "license": "BSD",

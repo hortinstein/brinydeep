@@ -10,6 +10,7 @@
 *   ensure 100% test coverage
 *   implement ssh functionality
 *   clean up credentials string handling so it is only in one file
+*		documentation for get_ids_created_this_session
 
 node.js wrapper for [Digital Ocean's API](https://api.digitalocean.com)
 # install

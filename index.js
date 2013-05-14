@@ -8,6 +8,7 @@ var client_id = "";
 var cred_string = "";
 var host_string = "https://api.digitalocean.com/";
 var requestor = require('./lib/request.js');
+var ids_created_this_session = [];
 
 brinydeep.setup = function (c_client_id, c_api_key) {
    api_key = c_api_key;
@@ -45,6 +46,12 @@ brinydeep.get_ids = function (callback) {
 		}
 	});
 };
+
+brinydeep.get_ids_created_this_session = function(){
+	return ids_created_this_session;
+};
+
+
 brinydeep.show_active = function (callback) {
 	var req = host_string+ "/droplets/?" + cred_string;
 	requestor.send_request(req,callback);
@@ -67,7 +74,20 @@ brinydeep.new_droplets = function (options,callback) {
 		new_machine_req = requestor.build_machine_req(options);
 	}
 	options = requestor.build_requests('droplets','/',new_machine_req);
-	requestor.send_request(options,callback);
+	requestor.send_request(options,function (e,o) {
+		//adds to a locally stored array of created droplets
+		if (Array.isArray(o)){
+			for (droplet in o) {
+				var id = o[droplet].droplet.id;
+				//console.log(id);
+				ids_created_this_session.push(id);
+			}
+		} else {
+			var id = o.droplet.id;
+			ids_created_this_session.push(id); 
+		}
+		callback(e,o);
+	});
 };
 
 // droplet_id(s) Required, Integer, this is the id of your droplet

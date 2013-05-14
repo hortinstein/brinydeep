@@ -1,27 +1,24 @@
 var should = require('should');
-var config = require('../config.json');
+var config = require('../../config.json');
 var brinydeep = require('../index.js');
 
-before(function (done) {
-		brinydeep.setup(config.client_key, config.api_key);
-		done();
+before(function(done) {
+	brinydeep.setup(config.client_key, config.api_key);
+	done();
 });
-var temp_ids ='';
+var temp_ids = '';
 var new_droplet_multi = {
-	droplets: [
-		{
-			name: "test2",
-			size_id: 66,
-			image_id: 25306,
-			region_id: 1
-		},
-		{
-			name: "test3",
-			size_id: 66,
-			image_id: 25306,
-			region_id: 1
-		}
-	]
+	droplets: [{
+		name: "test2",
+		size_id: 66,
+		image_id: 25306,
+		region_id: 1
+	}, {
+		name: "test3",
+		size_id: 66,
+		image_id: 25306,
+		region_id: 1
+	}]
 };
 var new_droplet = {
 	name: "test1",
@@ -29,58 +26,103 @@ var new_droplet = {
 	image_id: 25306,
 	region_id: 1
 };
-var id;
-it('should be able to show documentation', function (done) {
-    brinydeep.documentation(function (e,o) {
-	o.should.be.a('string');
- 		done();
- 	});
+
+var test_droplet_ids = 0;
+
+describe('documentation', function() {
+
+	it('should be able to display', function(done) {
+		brinydeep.documentation(function(e, o) {
+			o.should.be.a('string');
+			done();
+		});
+	});
+
+	it('should be able to list sizes', function(done) {
+		brinydeep.sizes(function(e, o) {
+			o.status.should.equal('OK');
+			//console.log(o);
+			done();
+		});
+	});
+
 });
 
-it('should be able to show active droplets', function (done) {
-    brinydeep.show_active(function (e,o) {
-    	o.status.should.equal('OK');
-    	o.droplets.length.should.equal(1);
-    	done();
-    });
+describe('droplet creation', function() {
+
+	it('should be able to create a single droplet', function(done) {
+		brinydeep.new_droplets(new_droplet, function(e, o) {
+			//console.log(e, o);
+			o.status.should.equal('OK');
+			done();
+		});
+	});
+
+	// it('should be able to create multiple droplets', function(done) {
+	// 	brinydeep.new_droplets(new_droplet_multi, function(e, o) {
+	// 		console.log(e, o);
+	// 		o.length.should.equal(2);
+	// 		done();
+	// 	});
+	// });
+
 });
 
-// it('should be able to create a droplet', function (done) {
-// 	brinydeep.new_droplets(new_droplet,function (e,o) {
-// 		o.status.should.equal('OK');
-// 		done();
-// 	});
-// });
-// it('should be able to create multiple droplets', function (done) {
-// 	brinydeep.new_droplets(new_droplet_multi,function (e,o) {
-// 		console.log(e,o)
-// 		o.status.should.equal('OK');
-// 		o.droplets.length.should.equal(0);
-// 		done();
-// 	});
-// });
-it('should be able to list all ids', function (done) {
-	brinydeep.get_ids(function (e,o) {
-		temp_ids = o;
-		//o.length.should.equal(3);
+describe('bulk droplet info', function() {
+
+	it('should be able to show active droplets', function(done) {
+		brinydeep.show_active(function(e, o) {
+			o.status.should.equal('OK');
+			//o.droplets.length.should.equal(1);
+			//console.log(o);
+			done();
+		});
+	});
+
+	it('should be able to list all droplet IDs created in current session', function(done) {
+		test_droplet_ids = brinydeep.get_ids_created_this_session();
+		test_droplet_ids.length.should.equal(1);
+		//console.log(test_droplet_ids);
 		done();
 	});
+
+
+	it('should be able to list all ids', function(done) {
+		brinydeep.get_ids(function(e, o) {
+			temp_ids = o;
+			//o.length.should.equal(3);
+			done();
+		});
+	});
+
 });
-// it('should be able to show droplet by ID', function (done) {
-// 	brinydeep.show_droplets('105423',function (e,o) {
-// 		console.log(o);
-// 		o.status.should.equal('OK');
-// 		done();
-// 	});
-// });
-// it('should be able reboot machines', function (done) {
-// 	brinydeep.reboot(temp_ids,function (e,o) {
-// 		console.log(o)
-// 		o.forEach(function (stat) {
-// 			stat.status.should.equal('OK');
-// 		})
-// 	});
-// });
+
+describe('droplet functions', function() {
+
+	before(function(done) { //timeout function to allow for droplet init
+		console.log('\ntest timeout to allow droplet creation\n');
+		this.timeout(50 * 1000);
+		setTimeout(done, 50 * 990);
+	});
+
+	it('should be able to show droplet by ID', function(done) {
+		brinydeep.show_droplets(test_droplet_ids[0], function(e, o) {
+			//console.log(o);
+			o.status.should.equal('OK');
+			done();
+		});
+	});
+
+	it('should be able to destroy test droplets', function(done) {
+		brinydeep.destroy(test_droplet_ids, function(e, o) {
+			console.log(e, o, o[0].error_message);
+			o.status.should.equal('OK');
+			done();
+		});
+	});
+
+});
+
 // it('should be able to destroy all machines', function (done) {
 // 	brinydeep.destroy_all_droplets(function (e,o) {
 // 		o.forEach(function (stat) {
@@ -89,10 +131,3 @@ it('should be able to list all ids', function (done) {
 // 		done();
 // 	});
 // });
-it('should be able to list sizes', function (done) {
-	brinydeep.sizes(function (e,o) {
-		o.status.should.equal('OK');
-		//console.log(o);
-		done();
-	});
-});
