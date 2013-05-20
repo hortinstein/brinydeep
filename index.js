@@ -76,15 +76,19 @@ brinydeep.new_droplets = function (options,callback) {
 	options = requestor.build_requests('droplets','/',new_machine_req);
 	requestor.send_request(options,function (e,o) {
 		//adds to a locally stored array of created droplets
-		if (Array.isArray(o)){
-			for (droplet in o) {
-				var id = o[droplet].droplet.id;
-				//console.log(id);
-				ids_created_this_session.push(id);
+        if (Array.isArray(o)){
+			for (var droplet in o) {
+                if (o[droplet].status === 'OK']){
+    				var id = o[droplet].droplet.id;
+    				//console.log(id);
+    				ids_created_this_session.push(id);
+                }
 			}
 		} else {
-			var id = o.droplet.id;
-			ids_created_this_session.push(id); 
+             if (o.status === 'OK']){
+			var t_id = o.droplet.id;
+			ids_created_this_session.push(t_id); 
+             }
 		}
 		callback(e,o);
 	});
