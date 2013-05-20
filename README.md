@@ -1,5 +1,7 @@
 # brinydeep
 =========
+## 0.54 notes
+*		fixed error checking, digital ocean made a minor change in their JSON
 ## 0.51 notes 
 *   added a function that takes in ID's and returns IPs (if not available will continue to poll until IP is assigned):
 ``` js
