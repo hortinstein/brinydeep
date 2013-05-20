@@ -57,6 +57,14 @@ describe('droplet creation', function() {
 		});
 	});
 
+	it('should fail to create a single droplet with invalid size', function(done) {
+		new_droplet.size_id = 2312312;
+		brinydeep.new_droplets(new_droplet, function(e, o) {
+			e.should.equal('ERROR');
+			done();
+		});
+	});
+
 	it('should be able to create multiple droplets', function(done) {
 		brinydeep.new_droplets(new_droplet_multi, function(e, o) {
 			o.length.should.equal(2);
