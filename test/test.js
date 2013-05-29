@@ -91,7 +91,16 @@ describe('bulk droplet info', function() {
 		//console.log(test_droplet_ids);
 		done();
 	});
-	it('should be able to provide all droplet IPs', function(done) {
+	it('should be able to provide one droplet IPs', function(done) {
+		this.timeout(50 * 1000); //unclear how long this should take this will disable the timeout
+		brinydeep.get_ips(test_droplet_ids[0],function (e,o) {
+			console.log(o);
+			o.ip_address.should.not.equal(null);
+			done();
+		});
+	});
+
+	it('should be able to provide all droplet IP', function(done) {
 		this.timeout(50 * 1000); //unclear how long this should take this will disable the timeout
 		brinydeep.get_ips(test_droplet_ids,function (e,o) {
 			o.length.should.equal(3);
@@ -132,6 +141,7 @@ describe('droplet functions', function() {
 
 	it('should be able to destroy test droplets', function(done) {
 		brinydeep.destroy(test_droplet_ids, function(e, o) {
+			console.log(e,o);
 			o[0].status.should.equal('OK');
 			o[1].status.should.equal('OK');
 			o[2].status.should.equal('OK');

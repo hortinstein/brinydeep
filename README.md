@@ -1,5 +1,7 @@
 # brinydeep
 =========
+## 0.56 notes
+*		now correctly returns IPs if called on a single ID
 ## 0.55 notes
 *		fixed error checking, digital ocean made a minor change in their JSON
 ## 0.51 notes 
