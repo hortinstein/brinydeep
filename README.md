@@ -1,5 +1,5 @@
-# brinydeep
-=========
+# brinydeep beta...api not yet stable
+
 ## 0.56 notes
 *		now correctly returns IPs if called on a single ID
 ## 0.55 notes
@@ -21,7 +21,7 @@ returns:
 *   seperated requesting logic for the api exposure functions
 
 ## TODO
-*   ensure 100% test coverage
+*   ensure 100% test coverage (specially standardizing array vs API calls)
 *   implement ssh functionality
 *   clean up credentials string handling so it is only in one file
 *		documentation for get_ids_created_this_session
