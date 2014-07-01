@@ -1,4 +1,4 @@
-# brinydeep beta...api not yet stable
+# brinydeep beta...api not yet stable, please note this is v1 API
 
 ## 0.56 notes
 *		now correctly returns IPs if called on a single ID
