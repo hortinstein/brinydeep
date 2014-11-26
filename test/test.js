@@ -1,29 +1,36 @@
 var should = require('should');
 var config = require('../../config.json');
 var brinydeep = require('../index.js');
-
+var image_num = 6374128;
+var region_id = 1;
 before(function(done) {
 	brinydeep.setup(config.client_key, config.api_key);
-	done();
+    brinydeep.all_images(function(e,o){
+       //image_num = o.images[3].id;
+       //region_id = o.images[3].regions[0];
+       //console.log(e,o);
+        done();
+    });
 });
+
 var temp_ids = '';
 var new_droplet_multi = {
 	droplets: [{
 		name: "test2",
 		size_id: 66,
-		image_id: 25306,
+		image_id: image_num,
 		region_id: 1
 	}, {
 		name: "test3",
 		size_id: 66,
-		image_id: 25306,
+		image_id: image_num,
 		region_id: 1
 	}]
 };
 var new_droplet = {
 	name: "test1",
 	size_id: 66,
-	image_id: 25306,
+	image_id: image_num,
 	region_id: 1
 };
 
@@ -52,6 +59,7 @@ describe('droplet creation', function() {
 
 	it('should be able to create a single droplet', function(done) {
 		brinydeep.new_droplets(new_droplet, function(e, o) {
+            console.log(e,o);
 			o.status.should.equal('OK');
 			done();
 		});
@@ -67,7 +75,7 @@ describe('droplet creation', function() {
 
 	it('should be able to create multiple droplets', function(done) {
 		brinydeep.new_droplets(new_droplet_multi, function(e, o) {
-			o.length.should.equal(2);
+			o.status.should.equal('OK');
 			done();
 		});
 	});
@@ -116,6 +124,7 @@ describe('bulk droplet info', function() {
 	it('should be able to list all ids', function(done) {
 		brinydeep.get_ids(function(e, o) {
 			temp_ids = o;
+            console.log(o);
 			//o.length.should.equal(3);
 			done();
 		});
