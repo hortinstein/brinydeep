@@ -1,5 +1,6 @@
 # brinydeep beta...api not yet stable, please note this is v1 API
 
+#PLEASE NOTE TESTS ARE NOT WORKING DUE TO PROBLEMS WITH SIZE AND IMAGE ID, API STILL WORKS
 ## 0.56 notes
 *		now correctly returns IPs if called on a single ID
 ## 0.55 notes
